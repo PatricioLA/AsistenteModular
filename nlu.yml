@@ -1,0 +1,77 @@
+version: "3.1"
+
+nlu:
+- intent: saludo
+  examples: |
+    - hey
+    - hola
+    - que tal
+    - buenas
+    - buen dia
+    - buenos dia
+    - buenas tardes
+    - buenas noches
+    - que hay
+    - ola
+    - que onda
+
+- intent: despedida
+  examples: |
+    - adios
+    - muchas gracias, adios
+    - volvere
+    - volvere mas tarde
+    - vuelvo luego
+    - bye
+    - hasta luego
+    - hasta pronto
+    - nos vemos
+    - que tengas buen dia
+    - chao
+
+- intent: afirmar
+  examples: |
+    - si
+    - s
+    - talvez 
+    - por supuesto
+    - suena bien
+    - me parece bien
+    - ok
+    - claro
+    - va
+    - simon
+    - asies
+    - si, porfavor
+
+- intent: negar
+  examples: |
+    - no
+    - n
+    - nunca
+    - no lo creo
+    - no asi
+    - asi no
+    - no puede ser
+    - no realmente
+    - de ninguna manera
+    - negativo
+
+- intent: user_nombre
+  examples: |
+    - victor
+    - patricio
+    - ramon
+
+- intent: lugar_report
+  examples: |
+    - 1
+
+- intent: foto
+  examples: |
+    - 2
+
+- intent: guardar_dato
+  examples: |
+    - 3
+

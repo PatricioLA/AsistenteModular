@@ -1,0 +1,31 @@
+version: "3.1"
+
+stories:
+
+- story: elabora_reporte
+  steps:
+  - intent: saludo
+  - action: utter_saludo
+  - intent: afirmar
+  - action: utter_nombre
+  - intent: user_nombre
+  - action: utter_direccion
+  - intent: lugar_report
+  - action: utter_foto
+  - intent: foto
+  - action: utter_folio
+  - intent: afirmar
+  - action: utter_despedida
+
+- story: mod_reporte
+  steps:
+  - intent: saludo
+  - action: utter_saludo
+  - intent: negar
+  - action: utter_mod_folio
+  - intent: guardar_dato
+  - action: utter_actualizar
+  - intent: afirmar
+  - action: utter_despedida
+
+

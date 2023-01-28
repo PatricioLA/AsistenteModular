@@ -1,0 +1,47 @@
+version: "3.1"
+
+intents:
+  - saludo
+  - despedida
+  - afirmar
+  - negar
+  - user_nombre
+  - lugar_report
+  - foto
+  - guardar_dato
+
+responses:
+  utter_saludo:
+  - text: "Bienvenido, tiene algo que reportar?"
+
+  utter_modificar:
+  - text: "Quiere modificar su reporte?:"
+
+  utter_ayuda:
+  - text: "puedo ayudarte en algo mas?"
+
+  utter_nombre:
+  - text: "Muy bien! ingresa tu nombre porfavor."
+
+  utter_direccion:
+  - text: "Ingresa la dirección del sitio donde quieres reportar."
+
+  utter_foto:
+  - text: "Ahora sube la foto que del lugar que deseas reportar"
+
+  utter_folio:
+  - text: "Muy bien! este es tu folio, deseas finalizar?"
+
+  utter_mod_folio:
+  - text: "Muy bien! ingresa tu folio porfavor"
+
+  utter_actualizar:
+  - text: "Datos actualizados correctamente, desea terminar?"
+
+  utter_despedida:
+  - text: "Hasta luego :)"
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
