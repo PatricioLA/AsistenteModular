@@ -1,0 +1,46 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hola
+    - buenos dias
+    - buenas tardes
+    - buenas noches
+    - que hay
+    - que onda
+
+- intent: goodbye
+  examples: |
+    - adios
+    - muchas gracias, adios
+    - bye
+    - hasta luego
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - ¿eres un robot?
+
+- intent: request_data_report
+  examples: |
+    - Si
+    - Obvio
+    - Por supuesto
+    - quiero realizar un reporte
+    - Dare mis datos para reportar
+
+- intent: stop
+  examples: |
+    - No quiero seguir con el reporte
+    - No deseo continuar
+
+- intent: affirm
+  examples: |
+    - Deseo continuar
+    - Fue un error
+    -  Quiero seguir con el reporte.
