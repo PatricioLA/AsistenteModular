@@ -32,19 +32,17 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - action: utter_submit
-  - action: utter_slots_values
+  - action: utter_slots_values 
 
-
-- rule: Interruption in report form
+- rule: Interruption in Report form
   condition:
-  # Condicion donde el formulario esta activo
+  #Condition that form is active
   - active_loop: report_form
   steps:
-  # En caso de intentar "bot_challenge"
+  #The case of an intent 'bot_challenge'
   - intent: bot_challenge
   - action: utter_iamabot
-  # Retorna al formulario
+  #Return to form after handling the 'bot_challenge' inten
   - action: report_form
   - active_loop: report_form
-
 

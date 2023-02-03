@@ -20,11 +20,9 @@ nlu:
 
 - intent: bot_challenge
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
-    - ¿eres un robot?
+    - ¿Eres un bot?
+    - ¿Estoy hablando con una persona?
+    - ¿Estoy hablando con un bot?
 
 - intent: request_data_report
   examples: |
@@ -43,4 +41,4 @@ nlu:
   examples: |
     - Deseo continuar
     - Fue un error
-    -  Quiero seguir con el reporte.
+    - Quiero seguir con el reporte.
