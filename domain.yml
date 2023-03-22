@@ -1,0 +1,82 @@
+version: '3.1'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- bot_challenge
+- goodbye
+- greet
+- request_data_report
+- stop_form
+- affirm_stop
+- nombre
+- apellido
+- ubicacion
+- continue_form
+
+entities:
+- first_name
+- last_name
+- location_report
+slots:
+  first_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: first_name
+      conditions:
+      - active_loop: report_form
+        requested_slot: first_name
+  last_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: last_name
+      conditions:
+      - active_loop: report_form
+        requested_slot: last_name
+  location_report:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: location_report
+      conditions:
+      - active_loop: report_form
+        requested_slot: location_report
+forms:
+  report_form:
+    required_slots:
+      - first_name
+      - last_name
+      - location_report     
+responses:
+  utter_greet:
+  - text: Bienvenido, Soy un asistente virtual. ¿En que te puedo ayudar?
+  utter_goodbye:
+  - text: Adiós, espero haber sido de ayuda.
+  utter_ask_first_name:
+  - text: Cual es tu primer nombre?
+  utter_ask_last_name:
+  - text: Cual es su apellido?
+  utter_ask_location_report:
+  - text: Por ultimo, indique la ubicacion del graffiti."
+  utter_ask_continue:
+  - text: ¿Estas seguro de cancelar el reporte?
+  utter_submit:
+  - text: ¡Muy bien, gracias por su coolaboracion!
+  utter_report_slots:
+  - text: Su nombre es {first_name} {last_name}, la  ubicacion dada es {location_report}. Para finalizar, adjunte la imagen del graffiti5.
+  utter_iamabot:
+  - text: Soy un bot empleado para el reporte de graffitis, Diseñado por estudiantes de la UdeG con ayuda de RASA.
+
+actions:
+- utter_ask_continue
+- utter_goodbye
+- utter_greet
+- utter_iamabot
+- utter_report_slots
+- utter_submit
+- validate_report_form
