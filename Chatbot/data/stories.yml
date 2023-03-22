@@ -1,0 +1,120 @@
+version: "3.1"
+
+stories:
+
+- story: robot_challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+  - slot_was_set:
+    - requested_slot: first_name
+  - slot_was_set:
+    - first_name: null
+  - slot_was_set:
+    - requested_slot: last_name
+  - slot_was_set:
+    - last_name: null
+  - slot_was_set:
+    - requested_slot: location_report
+  - slot_was_set:
+    - location_report: null
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit
+  - action: utter_report_slots
+  - action: action_restart
+ 
+
+- story: User interrupts the form and he want to continue
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+  - intent: stop_form
+  - action: utter_ask_continue
+  - intent: continue_form
+  - action: report_form
+  - slot_was_set:
+    - requested_slot: first_name
+  - slot_was_set:
+    - first_name: null
+  - slot_was_set:
+    - requested_slot: last_name
+  - slot_was_set:
+    - last_name: null
+  - slot_was_set:
+    - requested_slot: location_report
+  - slot_was_set:
+    - location_report: null
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit
+  - action: utter_report_slots
+  - action: action_restart
+
+- story: User interrupts the form and doesn't want to continue
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+  - intent: stop_form
+  - action: utter_ask_continue
+  - intent: affirm_stop
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+  - slot_was_set:
+    - requested_slot: first_name
+  - intent: stop_form
+  - action: utter_ask_continue
+  - intent: affirm_stop
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+  - slot_was_set:
+    - requested_slot: first_name
+  - slot_was_set:
+    - first_name: s
+  - slot_was_set:
+    - requested_slot: last_name
+  - intent: stop_form
+  - action: utter_ask_continue
+  - intent: affirm_stop
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_goodbye
+  
