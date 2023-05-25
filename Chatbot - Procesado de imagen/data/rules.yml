@@ -1,0 +1,71 @@
+version: "3.1"
+
+rules:
+
+- rule: Say hello anytime the user says a hello
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  - action: action_restart
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+  - action: action_restart
+
+- rule: Set Report Form
+  steps:
+  - intent: request_data_report
+  - action: report_form
+  - active_loop: report_form
+
+- rule: Submit Report Form
+  condition:
+  - active_loop: report_form
+  steps:
+  - action: report_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit
+  - action: utter_report_slots
+  - action: action_restart
+
+
+- rule: Interruption in Report Form 1
+  condition:
+  #Condition that form is active
+  - active_loop: report_form
+  steps:
+  #The case of an intent 'bot_challenge'
+  - intent: bot_challenge
+  - action: utter_iamabot
+  #Return to form after handling the 'bot_challenge' inten
+  - action: report_form
+  - active_loop: report_form  
+
+- rule: Interruption in Report Form 2
+  condition:
+  #Condition that form is active
+  - active_loop: report_form
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: report_form
+  - active_loop: report_form  
+
+- rule: Interruption in Report Form 3
+  condition:
+  #Condition that form is active
+  - active_loop: report_form
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  - action: report_form
+  - active_loop: report_form  

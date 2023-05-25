@@ -1,0 +1,95 @@
+version: '3.1'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- bot_challenge
+- goodbye
+- greet
+- request_data_report
+- stop_form
+- affirm_stop
+- nombre
+- apellido
+- ubicacion
+- imagen
+- continue_form
+
+entities:
+- first_name
+- last_name
+- location_report
+- imagename
+
+slots:
+  first_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: first_name
+      conditions:
+      - active_loop: report_form
+        requested_slot: first_name
+  last_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: last_name
+      conditions:
+      - active_loop: report_form
+        requested_slot: last_name
+  location_report:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: location_report
+      conditions:
+      - active_loop: report_form
+        requested_slot: location_report
+  imagename:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: imagename
+
+forms:
+  report_form:
+    required_slots:
+      - first_name
+      - last_name
+      - location_report  
+      - imagename
+
+responses:
+  utter_greet:
+  - text:  "👋 Que tal"
+  utter_goodbye:
+  - text: "👋 Hasta luego. Espero haber sido de ayuda"
+  utter_ask_first_name:
+  - text: "¿Cual es tu primer nombre?"
+  utter_ask_last_name:
+  - text: "¿Cual es su apellido?"
+  utter_ask_location_report:
+  - text: "Indique la colonia donde está el graffiti."
+  utter_ask_imagename:
+  - text: "Para finalizar envie la imagen del graffiti. De preferencia, que se vea centrado"
+  utter_ask_continue:
+  - text: "¿Estas seguro de cancelar el reporte?"
+  utter_submit:
+  - text: "¡Muy bien, gracias por su coolaboracion!"
+  utter_report_slots:
+  - text: "Gracias por su confianza, su reporte quedo registrado."
+  utter_iamabot:
+  - text: "Soy un chatbot, diseñado para agilizar el proceso de reportes sobre graffitis en el municipio"
+
+actions:
+- utter_ask_continue
+- utter_goodbye
+- utter_greet
+- utter_iamabot
+- utter_report_slots
+- utter_submit
+- validate_report_form
