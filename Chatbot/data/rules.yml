@@ -11,11 +11,13 @@ rules:
   steps:
   - intent: goodbye
   - action: utter_goodbye
+  - action: action_restart
 
 - rule: Say 'I am a bot' anytime the user challenges
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+  - action: action_restart
 
 - rule: Set Report Form
   steps:
@@ -67,3 +69,4 @@ rules:
   - action: utter_goodbye
   - action: report_form
   - active_loop: report_form  
+

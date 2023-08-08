@@ -13,6 +13,14 @@
 action_endpoint:
   url: "http://localhost:5055/webhook"
 
+endpoints:
+  # Otros endpoints que puedas tener
+  rest:
+    url: "http://localhost:5055/webhooks/rest/webhook"
+
+additional_endpoints:
+  image:
+    url: "http://localhost:5005/webhooks/image/webhook"
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
 # https://rasa.com/docs/rasa/tracker-stores
@@ -32,9 +40,17 @@ action_endpoint:
 #    username: <username used for authentication>
 #    password: <password used for authentication>
 
+#tracker_store:
+#  type: sql
 tracker_store:
-  type: sql
-
+  type: SQL
+  dialect: "mysql" #"mysql+pymysql"  # the dialect used to interact with the db
+  url: "LeCuack"  # (optional) host of the sql db, e.g. "localhost"127.0.0.1
+  port: "3306"
+  db: "rasa"  # path to your db
+  username: "rasaserver"
+  #username: "rasaserver"  # username used for authentication
+  password: "Rasa#2023"  # password used for authentication
 # Event broker which all conversation events should be streamed to.
 # https://rasa.com/docs/rasa/event-brokers
 

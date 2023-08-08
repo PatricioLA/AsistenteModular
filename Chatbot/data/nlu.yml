@@ -8,6 +8,8 @@ nlu:
     - Buenas tardes
     - Buenas noches
     - Qué tal
+    - que tal
+    - Que onda
     - Oye
     - Hey
 
@@ -15,7 +17,6 @@ nlu:
   examples: |
     - Adiós
     - Hasta luego
-    - Hasta la vista
     - Hasta pronto
     - Nos vemos
     - Chao
@@ -30,47 +31,27 @@ nlu:
     - ¿Que eres?
     - ¿Quien eres?
 
-- intent: affirm_stop
-  examples: |
-    - Correcto
-    - Asi es, cancela
-    - Afirmativo
-    - Por supuesto
-    - Cancela
-    - Si, cancela
-
 - intent: stop_form
   examples: |
-    - Deseo cancelar el reporte
-    - No quiero continuar con el reporte
     - Ya no quiero hacer el reporte
-    - Quiero cancelar
     - Cancela el reporte
-    - Ya no necesito realizar un reporte
-    - No tengo tiempo, cancela
-
-- intent: continue_form
-  examples: |
-    - He cambiado de opinion
-    - Continua con el reporte
-    - Sigue con el reporte
-    - Deseo continuar con el reporte
-    - Continua
-    - Me equivoque, continua
-    - Por favor, continua
+    - Cancela
+    - Ya no es necesario reportar
+    - Quiero cancelar 
+    - No quiero hacer el reporte
 
 
 - intent: request_data_report
   examples: |
-    - Quiero realizar un reporte
-    - Dare mis datos para reportar
     - Quiero hacer un reporte
+    - Quiero reportar un grafiti
     - Necesito hacer un reporte
-    - Quiero reportar un graffiti
-    - Quiero hacer otro reporte
+    - Necesito reportar un grafiti
+    - reportar grafiti
 
-- intent: nombre
+- intent: first_name
   examples: |
+    - [Brenda](first_name)
     - [María](first_name)
     - [José](first_name)
     - [Juan](first_name)
@@ -87,7 +68,7 @@ nlu:
     - [Guadalupe](first_name)
     - [Pedro](first_name)
     - [Manuel](first_name)
-    - [Víctor](first_name)
+    - [Victor](first_name)
     - [Antonio](first_name)
     - [Alejandro](first_name)
     - [Alejandra](first_name)
@@ -174,9 +155,32 @@ nlu:
     - [Miriam](first_name)
     - [Virginia](first_name)
     - [Andrea](first_name)
-    - [Sofia](first_name)
+    - [Sofia](first_name) 
 
-- intent: apellido
+    - [Adolfo](first_name)
+    - [Adrián](first_name)
+    - [Alan](first_name)
+    - [Alexis](first_name)
+    - [Camila](first_name)
+    - [Cesar](first_name)
+    - [David](first_name)
+    - [Elías](first_name)
+    - [Emilio](first_name)
+    - [Esteban](first_name)
+    - [Elena](first_name)
+    - [Mateo](first_name)
+    - [Matías](first_name)
+    - [Nicolás](first_name)
+    - [Victoria](first_name)
+    - [Ximena](first_name)
+    - [María](first_name)
+    - [Adrián](first_name)
+    - [Paula](first_name)
+    - [Sara](first_name)
+    - [Irene](first_name)
+
+
+- intent: last_name
   examples: |
     - [Hernández](last_name)
     - [Martínez](last_name)
@@ -282,7 +286,7 @@ nlu:
     - [Paz](last_name)
     - [Martínez](last_name)
 
-- intent: ubicacion
+- intent: location_report
   examples: |   
     - [Adobera](location_report)
     - [Agua Blanca](location_report)
@@ -620,3 +624,47 @@ nlu:
     - [Zalatitan](location_report)
     - [Las huertas](location_report)
     - [Olimpica y Boulevard](location_report)
+
+- intent: imagename
+  examples: |   
+    - [file_0](imagename)
+    - [file_1](imagename)
+    - [file_2](imagename)
+    - [file_3](imagename)
+    - [file_4](imagename)
+    - [file_5](imagename)
+    - [file_6](imagename)
+    - [file_7](imagename)
+    - [file_8](imagename)
+    - [file_9](imagename)
+    - [file_10](imagename)
+    - [file_11](imagename)
+    - [file_12](imagename)
+    - [file_13](imagename)
+    - [file_14](imagename)
+    - [file_15](imagename)
+    - [file_16](imagename)
+    - [file_17](imagename)
+    - [file_18](imagename)
+    - [file_19](imagename)
+    - [file_20](imagename)
+    - [file_21](imagename)
+    - [file_22](imagename)
+    - [file_23](imagename)
+    - [file_24](imagename)
+    - [file_25](imagename)
+    - [file_26](imagename)
+    - [file_27](imagename)
+    - [file_28](imagename)
+    - [file_29](imagename)
+    - [file_30](imagename)
+    - [file_31](imagename)
+    - [file_32](imagename)
+    - [file_33](imagename)
+    - [file_34](imagename)
+    - [file_35](imagename)
+    - [file_36](imagename)
+    - [file_37](imagename)
+    - [file_38](imagename)
+    - [file_39](imagename)
+    - [file_40](imagename)

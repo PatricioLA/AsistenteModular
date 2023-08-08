@@ -9,15 +9,18 @@ intents:
 - request_data_report
 - stop_form
 - affirm_stop
-- nombre
-- apellido
-- ubicacion
+- first_name
+- last_name
+- location_report
+- imagename
 - continue_form
 
 entities:
 - first_name
 - last_name
 - location_report
+- imagename
+
 slots:
   first_name:
     type: text
@@ -46,34 +49,44 @@ slots:
       conditions:
       - active_loop: report_form
         requested_slot: location_report
+  imagename:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: imagename
+
 forms:
   report_form:
     required_slots:
       - first_name
       - last_name
-      - location_report     
+      - location_report  
+      - imagename
+
 responses:
   utter_greet:
-  - text: Bienvenido, Soy un asistente virtual. ¿En que te puedo ayudar?
+  - text:  "👋 Que tal"
   utter_goodbye:
-  - text: Adiós, espero haber sido de ayuda.
+  - text: "👋 Hasta luego. Espero haber sido de ayuda"
   utter_ask_first_name:
-  - text: Cual es tu primer nombre?
+  - text: "¿Cual es tu primer nombre?"
   utter_ask_last_name:
-  - text: Cual es su apellido?
+  - text: "¿Cual es su apellido?"
   utter_ask_location_report:
-  - text: Por ultimo, indique la ubicacion del graffiti."
+  - text: "Indique la colonia donde está el graffiti."
+  utter_ask_imagename:
+  - text: "Para finalizar envie la imagen del graffiti. De preferencia, que se vea centrado"
   utter_ask_continue:
-  - text: ¿Estas seguro de cancelar el reporte?
+  - text: "¿Estas seguro de cancelar el reporte?"
   utter_submit:
-  - text: ¡Muy bien, gracias por su coolaboracion!
+  - text: "¡Muy bien, gracias por su coolaboracion!"
   utter_report_slots:
-  - text: Su nombre es {first_name} {last_name}, la  ubicacion dada es {location_report}. Para finalizar, adjunte la imagen del graffiti5.
+  - text: "Gracias por su confianza, su reporte quedo registrado."
   utter_iamabot:
-  - text: Soy un bot empleado para el reporte de graffitis, Diseñado por estudiantes de la UdeG con ayuda de RASA.
+  - text: "Soy un chatbot, diseñado para agilizar el proceso de reportes sobre graffitis en el municipio"
 
 actions:
-- utter_ask_continue
+- stop_report
 - utter_goodbye
 - utter_greet
 - utter_iamabot

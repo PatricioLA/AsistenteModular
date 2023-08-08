@@ -23,3 +23,10 @@ marker_location_report_not_set_immediately:
     - not:
       - slot_was_set: location_report
     - slot_was_set: location_report
+
+marker_imagename_not_set_immediately:
+  seq:
+    - intent: report_form
+    - not:
+      - slot_was_set: imagename
+    - slot_was_set: imagename

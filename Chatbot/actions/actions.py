@@ -4,6 +4,17 @@ from rasa_sdk import Tracker, FormValidationAction, Action
 from rasa_sdk.events import EventType, AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+import testModel
+
+from keras.applications.imagenet_utils import preprocess_input
+from keras.models import load_model
+
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+import requests
+
+flask_url = "http://localhost:5000"
 
 #def clean_name(name):
 #    return "".join([c for c in name if c.isalpha()])
@@ -71,6 +82,95 @@ class ValidateReportForm(FormValidationAction):
             return {"location_report": None}
 #        return {"first_name": name}
         return {"location_report": slot_value}
+    
+    def validate_imagename(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+
+        # Get slots for the report
+        imagename = tracker.get_slot('imagename')
+        image_path = "./images/" + imagename
+
+        width_shape = 224
+        height_shape = 224
+        names = ['congrafiti','singrafiti']
+        modelt = load_model("model-IA/model-v1.h5")
+
+
+        imaget=cv2.resize(cv2.imread(image_path), (width_shape, height_shape), interpolation = cv2.INTER_AREA)
+
+        xt = np.asarray(imaget)
+        xt=preprocess_input(xt)
+        xt = np.expand_dims(xt,axis=0)
+
+        preds = modelt.predict(xt)
+        if names[np.argmax(preds)] == 'congrafiti':
+            dispatcher.utter_message("✅ Su imagen fue catalogada como un graffiti.")
+                    
+        else:
+            dispatcher.utter_message("❌ Lo siento, su imagen no fue catalogada como un graffiti")
+
+        data = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location_report": tracker.get_slot("location_report"), "imagename": tracker.get_slot("imagename")}
+        response = requests.post(flask_url + "/add_contact", json=data)
+        if response.status_code == 200:
+            # Mostrar un mensaje de confirmación al usuario
+            dispatcher.utter_message(text="Datos enviados correctamente")
+        else:
+            # Mostrar un mensaje de error al usuario
+            dispatcher.utter_message(text="Ocurrió un problema al enviar los datos")
+
+        return []
+'''        first_name = tracker.get_slot("first_name")
+        last_name = tracker.get_slot("last_name")
+        location_report = tracker.get_slot("location_report")
+        imagename = tracker.get_slot("imagename")'''
+
+"        app.add_data(first_name, last_name, location_report, imagename)"
+'''conn = mysql.connector.connect(
+            host="LeCuack",
+            user="rasaserver",
+            password="Rasa#2023",
+            database="rasa"
+        )
+        cursor = conn.cursor()
+
+        cursor.execute(f"INSERT INTO report (firstName, lastName, location, image) VALUES ('{first_name}', '{last_name}', '{location_report}', '{imagename}')")
+        conn.commit()
+        
+        dispatcher.utter_message('✅ Su reporte ha sio registrado en nuestra base de datos.')
+        cursor.close()
+        conn.close()
+        return []
+'''    
+#    def insert(self,
+#        slot_value: Any,
+#        dispatcher: CollectingDispatcher,
+#        tracker: Tracker,
+#        domain: Dict[Text, Any],
+#    ) -> List[Dict]:        
+        #first_name = tracker.get_slot("first_name")
+        #last_name = tracker.get_slot("last_name")
+        #location_report = tracker.get_slot("location_report")
+        #imagename = tracker.get_slot("imagename")
+        #db = actions.classMysql.DatabaseConnection('localhost', 'rasa', 'rasaserver', 'Rasa#2023')
+        #db.connect()
+        #engine = sqlalchemy.create_engine("mysql+pymysql://<rasaserver>:<Rasa#2023>@<localhost>/<rasa>")
+        #conn = engine.connect()
+        #sql = f"INSERT INTO report (firstName, lastName, location, image) VALUES ('{first_name}', '{last_name}', '{location_report}', '{imagename}')"
+        #conn.engine.execute(sql)
+        #dispatcher.utter_message('✅ Su reporte ha sio registrado en nuestra base de datos.')
+        #  results = db.query("SELECT Quota, Consumption, Speed "
+        #     "FROM `user_info` INNER JOIN `consumption` "
+        #      "ON `user_info`.`ID` = `consumption`.`UserID` "
+        #      f"WHERE username = '{username}'")
+        #db.disconnect()
+        #except Exception as e:
+        #    dispatcher.utter_message('Sorry, I couldn\'t connect to the database.')
+        #    return []
 
 
 
