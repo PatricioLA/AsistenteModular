@@ -2,65 +2,68 @@ version: '3.1'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
 intents:
 - bot_challenge
 - goodbye
 - greet
 - request_data_report
 - stop_form
-- affirm_stop
-- first_name
-- last_name
-- location_report
-- imagename
-- continue_form
+- provide_name
+- provide_lastname
+- provide_imagename
+#- imagename
 
-entities:
-- first_name
-- last_name
-- location_report
-- imagename
+#entities:
+#- first_name
+#- last_name
+#- location
+#- imagename
 
 slots:
   first_name:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: first_name
+    - type: from_text
       conditions:
       - active_loop: report_form
         requested_slot: first_name
+      not_intent: [stop_form, greet, goodbye, bot_challenge]
   last_name:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: last_name
+    - type: from_text
       conditions:
       - active_loop: report_form
         requested_slot: last_name
-  location_report:
+      not_intent: [stop_form, greet, goodbye, bot_challenge]
+  location:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: location_report
+    - type: from_text
       conditions:
       - active_loop: report_form
-        requested_slot: location_report
+        requested_slot: location
+      not_intent: [stop_form, greet, goodbye, bot_challenge]
   imagename:
     type: text
     mappings:
-    - type: from_entity
-      entity: imagename
+    - type: from_text
+      conditions:
+      - active_loop: report_form
+        requested_slot: imagename
+      not_intent: [stop_form, greet, goodbye, bot_challenge]
+
 
 forms:
   report_form:
     required_slots:
       - first_name
       - last_name
-      - location_report  
+      - location 
       - imagename
 
 responses:
@@ -68,28 +71,28 @@ responses:
   - text:  "👋 Que tal"
   utter_goodbye:
   - text: "👋 Hasta luego. Espero haber sido de ayuda"
+  utter_iamabot:
+  - text: "Soy un chatbot, diseñado para agilizar el proceso de reportes sobre graffitis en el municipio"
+  utter_cancelconfirm:
+  - text: "Cancelaste tu reporte. Espero vuelvas pronto para realizarlo 👋"
   utter_ask_first_name:
   - text: "¿Cual es tu primer nombre?"
   utter_ask_last_name:
   - text: "¿Cual es su apellido?"
-  utter_ask_location_report:
+  utter_ask_location:
   - text: "Indique la colonia donde está el graffiti."
   utter_ask_imagename:
   - text: "Para finalizar envie la imagen del graffiti. De preferencia, que se vea centrado"
-  utter_ask_continue:
-  - text: "¿Estas seguro de cancelar el reporte?"
   utter_submit:
   - text: "¡Muy bien, gracias por su coolaboracion!"
   utter_report_slots:
   - text: "Gracias por su confianza, su reporte quedo registrado."
-  utter_iamabot:
-  - text: "Soy un chatbot, diseñado para agilizar el proceso de reportes sobre graffitis en el municipio"
 
 actions:
 - stop_report
 - utter_goodbye
 - utter_greet
 - utter_iamabot
-- utter_report_slots
 - utter_submit
+- utter_report_slots
 - validate_report_form

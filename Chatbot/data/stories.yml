@@ -6,13 +6,11 @@ stories:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: action_restart
 
 - story: goodbye
   steps:
   - intent: goodbye
   - action: utter_goodbye
-  - action: action_restart
 
 - story: report form
   steps:
@@ -30,9 +28,9 @@ stories:
   - slot_was_set:
     - last_name: null
   - slot_was_set:
-    - requested_slot: location_report
+    - requested_slot: location
   - slot_was_set:
-    - location_report: null
+    - location: null
   - slot_was_set:
     - requested_slot: imagename
   - slot_was_set:
@@ -54,7 +52,7 @@ stories:
   - intent: stop_form
   - action: action_deactivate_loop
   - active_loop: null
-  - action: utter_goodbye
+  - action: utter_cancelconfirm
   - action: action_restart
 
 - story: Interrupt in first name
@@ -71,7 +69,7 @@ stories:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_goodbye
+  - action: utter_cancelconfirm
   - action: action_restart
 
 - story: Interrupt in last name
@@ -92,7 +90,7 @@ stories:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_goodbye
+  - action: utter_cancelconfirm
   - action: action_restart
 
 - story: Interrupt in location
@@ -111,13 +109,13 @@ stories:
   - slot_was_set:
     - last_name: s
   - slot_was_set:
-    - requested_slot: location_report
+    - requested_slot: location
   - intent: stop_form
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_goodbye
+  - action: utter_cancelconfirm
   - action: action_restart
 
 - story: Interrupt in imagename
@@ -136,8 +134,8 @@ stories:
   - slot_was_set:
     - last_name: s
   - slot_was_set:
-    - requested_slot: location_report
-    - location_report: s
+    - requested_slot: location
+    - location: s
   - slot_was_set:
     - requested_slot: imagename
   - intent: stop_form
@@ -145,6 +143,5 @@ stories:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_goodbye
+  - action: utter_cancelconfirm
   - action: action_restart
-  
