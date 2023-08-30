@@ -11,8 +11,8 @@ intents:
 - stop_form
 - provide_name
 - provide_lastname
+- provide_location
 - provide_imagename
-#- imagename
 
 #entities:
 #- first_name
@@ -29,7 +29,6 @@ slots:
       conditions:
       - active_loop: report_form
         requested_slot: first_name
-      not_intent: [stop_form, greet, goodbye, bot_challenge]
   last_name:
     type: text
     influence_conversation: true
@@ -38,16 +37,14 @@ slots:
       conditions:
       - active_loop: report_form
         requested_slot: last_name
-      not_intent: [stop_form, greet, goodbye, bot_challenge]
-  location:
+  location_report:
     type: text
     influence_conversation: true
     mappings:
     - type: from_text
       conditions:
       - active_loop: report_form
-        requested_slot: location
-      not_intent: [stop_form, greet, goodbye, bot_challenge]
+        requested_slot: location_report
   imagename:
     type: text
     mappings:
@@ -55,15 +52,18 @@ slots:
       conditions:
       - active_loop: report_form
         requested_slot: imagename
-      not_intent: [stop_form, greet, goodbye, bot_challenge]
-
 
 forms:
   report_form:
+    ignored_intents: 
+    - bot_challenge
+    - goodbye
+    - greet
+    - stop_form
     required_slots:
       - first_name
       - last_name
-      - location 
+      - location_report 
       - imagename
 
 responses:
@@ -79,10 +79,11 @@ responses:
   - text: "¿Cual es tu primer nombre?"
   utter_ask_last_name:
   - text: "¿Cual es su apellido?"
-  utter_ask_location:
+  utter_ask_location_report:
   - text: "Indique la colonia donde está el graffiti."
   utter_ask_imagename:
   - text: "Para finalizar envie la imagen del graffiti. De preferencia, que se vea centrado"
+
   utter_submit:
   - text: "¡Muy bien, gracias por su coolaboracion!"
   utter_report_slots:

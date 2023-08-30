@@ -95,6 +95,8 @@ nlu:
     - Reportar grafiti
     - reporte
     - Reporte
+    - quiero reportar
+    - Quiero reportar
 
 - intent: provide_name
   examples: |
@@ -203,61 +205,64 @@ nlu:
     - Ochoa
     - Santos
     - Herrera
+    - Amador
 
+- intent: provide_location
+  examples: |
+    - Los Olivos
+    - los olivos
+    - Adobera
+    - Agua Blanca
+    - Agua Escondida
+    - Aguajomate
+    - Águilas
+    - Ahuacate
+    - Alamedas de San Gaspar
+    - Alamedas de Zalatitán
+    - Alfareros
+    - Alpinos
+    - Altamira
+    - Altamira
+    - Amiales Ciudad Aztlán
+    - Anexo Ciudad Aztlán
+    - Arboledas de San Gaspar
+    - Arboleda Tonala
+    - Arcos de Zalatitan
+    - Arcos de Zalatitan II
+    - Arroyo
+    - Arroyo de Enmedio
+    - Arroyos
+    - Arroyo Seco
+    - Lomas del tapatio
+    - Lomas del Sur
+    - Paseos del lago
+    - Americana
+    - Centro
+    - Atlas
+    - La Jalisco
+  
 - intent: provide_imagename
   examples: |
-    - file_01.jpg
-    - file_02.jpg
-    - file_03.jpg
-    - file_04.jpg
-    - file_05.jpg
-    - file_06.jpg
-    - file_07.jpg
-    - file_08.jpg
-    - file_09.jpg
-    - file_10.jpg
-    - file_11.jpg
-    - file_12.jpg
-    - file_13.jpg
-    - file_14.jpg
-    - file_15.jpg
-    - file_16.jpg
-    - file_17.jpg
-    - file_18.jpg
-    - file_19.jpg
-    - file_20.jpg
-    - file_21.jpg
-    - file_22.jpg
-    - file_23.jpg
-    - file_24.jpg
-    - file_25.jpg
-    - file_26.jpg
-    - file_27.jpg
-    - file_28.jpg
-    - file_29.jpg
-    - file_30.jpg
-    - file_31.jpg
-    - file_32.jpg
-    - file_33.jpg
-    - file_34.jpg
-    - file_35.jpg
-    - file_36.jpg
-    - file_37.jpg
-    - file_38.jpg
-    - file_39.jpg
-    - file_40.jpg
-    - file_41.jpg
-    - file_42.jpg
-    - file_43.jpg
-    - file_44.jpg
-    - file_45.jpg
-    - file_46.jpg
-    - file_47.jpg
-    - file_48.jpg
-    - file_49.jpg
-    - file_50.jpg
-
-
-  
-
+    - file_20
+    - file_21
+    - file_22
+    - file_23
+    - file_24
+    - file_25
+    - file_26
+    - file_27
+    - file_28
+    - file_29
+    - file_30
+    - file_31
+    - file_32
+    - file_33
+    - file_34
+    - file_35
+    - file_36
+    - file_37
+    - file_38
+    - file_39
+    - file_40
+    - image
 #[file_40](imagename)

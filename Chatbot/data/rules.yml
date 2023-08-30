@@ -35,40 +35,7 @@ rules:
   - action: utter_report_slots
   - action: action_restart
 
-
-- rule: Interruption in Report Form 1
-  condition:
-  #Condition that form is active
-  - active_loop: report_form
-  steps:
-  #The case of an intent 'bot_challenge'
-  - intent: bot_challenge
-  - action: utter_iamabot
-  #Return to form after handling the 'bot_challenge' inten
-  - action: report_form
-  - active_loop: report_form  
-
-- rule: Interruption in Report Form 2
-  condition:
-  #Condition that form is active
-  - active_loop: report_form
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - action: report_form
-  - active_loop: report_form  
-
-- rule: Interruption in Report Form 3
-  condition:
-  #Condition that form is active
-  - active_loop: report_form
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
-  - action: report_form
-  - active_loop: report_form  
-
-- rule: cancel form
+- rule: Cancel Form
   condition:
   - active_loop: report_form
   steps:

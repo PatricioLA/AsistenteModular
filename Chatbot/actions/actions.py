@@ -17,7 +17,8 @@ import mimetypes
 import re
 
 import os
-
+import requests
+import json
 
 import base64
 
@@ -39,7 +40,6 @@ class ValidateReportForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validate `first_name` value."""
-
         # If the name is super short, it might be wrong.
 #        name = clean_name(slot_value)
 #        if len(name) < 3:
@@ -67,23 +67,23 @@ class ValidateReportForm(FormValidationAction):
         dispatcher.utter_message(text=f"My bien, tu apellido es {slot_value}.")
         return {"last_name": slot_value}
 
-    def validate_location(
+    def validate_location_report(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        """Validate `first_name` value."""
+        """Validate `location_report` value."""
 
         # If the name is super short, it might be wrong.
 #        name = clean_name(slot_value)
 #        if len(name) < 3:
         if len(slot_value) < 5:
             dispatcher.utter_message(text="That must've been a typo.")
-            return {"location": None}
+            return {"location_report": None}
 #        return {"first_name": name}
-        return {"location": slot_value}
+        return {"location_report": slot_value}
 
 
     def validate_imagename(
@@ -106,11 +106,29 @@ class ValidateReportForm(FormValidationAction):
             #    imagename = imagename.value
                 imageDirectory = "./images/{}".format(imagename)
         elif channel == 'rest':
-            file = tracker.latest_message['file']
-            image = base64.b64decode(file)
-            with open('./images/image.jpg', 'wb') as f:
-                f.write(image)    
-            imageDirectory = "./images/image.jpg"
+            image_json_str = tracker.get_slot("imagename")
+            # Convertir la cadena JSON en un objeto Python (diccionario en este caso)
+            image_data = json.loads(image_json_str)
+    
+            # Acceder al valor "base64" en el diccionario resultante y decodificarlo
+            decoded_image_data = base64.b64decode(image_data["base64"])
+    
+            # Define el nombre de archivo específico
+            image_filename = "image.jpg"  # Cambia el nombre según lo necesario
+    
+            # Directorio donde guardarás las imágenes
+            save_directory = "./images/"
+    
+            # Crea el directorio si no existe
+            os.makedirs(save_directory, exist_ok=True)
+    
+            # Guarda la imagen en el directorio
+            image_path = os.path.join(save_directory, image_filename)
+            with open(image_path, "wb") as f:
+                f.write(decoded_image_data)
+            #except Exception as e:
+            #        dispatcher.utter_message(text="Error al guardar la imagen: {}".format(str(e)))
+                imageDirectory = "./images/image.jpg"
 
         width_shape = 224
         height_shape = 224
@@ -137,7 +155,7 @@ class ValidateReportForm(FormValidationAction):
             photo = f.read()
         photo_base64 = base64.b64encode(photo)
         photo_json = photo_base64.decode('ascii') 
-        data = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location": tracker.get_slot("location") , "imagename": photo_json}
+        data = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location_report": tracker.get_slot("location_report") , "imagename": photo_json}
         response = requests.post(flask_url + "/add_contact", json=data)
         if response.status_code == 200:
             # Mostrar un mensaje de confirmación al usuario
@@ -222,31 +240,4 @@ class ValidateReportForm(FormValidationAction):
                 f.write(response.content)
 
 '''
-#    def insert(self,
-#        slot_value: Any,
-#        dispatcher: CollectingDispatcher,
-#        tracker: Tracker,
-#        domain: Dict[Text, Any],
-#    ) -> List[Dict]:        
-        #first_name = tracker.get_slot("first_name")
-        #last_name = tracker.get_slot("last_name")
-        #location_report = tracker.get_slot("location_report")
-        #imagename = tracker.get_slot("imagename")
-        #db = actions.classMysql.DatabaseConnection('localhost', 'rasa', 'rasaserver', 'Rasa#2023')
-        #db.connect()
-        #engine = sqlalchemy.create_engine("mysql+pymysql://<rasaserver>:<Rasa#2023>@<localhost>/<rasa>")
-        #conn = engine.connect()
-        #sql = f"INSERT INTO report (firstName, lastName, location, image) VALUES ('{first_name}', '{last_name}', '{location_report}', '{imagename}')"
-        #conn.engine.execute(sql)
-        #dispatcher.utter_message('✅ Su reporte ha sio registrado en nuestra base de datos.')
-        #  results = db.query("SELECT Quota, Consumption, Speed "
-        #     "FROM `user_info` INNER JOIN `consumption` "
-        #      "ON `user_info`.`ID` = `consumption`.`UserID` "
-        #      f"WHERE username = '{username}'")
-        #db.disconnect()
-        #except Exception as e:
-        #    dispatcher.utter_message('Sorry, I couldn\'t connect to the database.')
-        #    return []
-
-
 
