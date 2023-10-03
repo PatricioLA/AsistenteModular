@@ -19,8 +19,10 @@ import re
 import os
 import requests
 import json
-
+import boto3
 import base64
+
+import actions.uploads
 
 
 flask_url = "http://localhost:5000"
@@ -41,6 +43,8 @@ class ValidateReportForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Validate `first_name` value."""
         # If the name is super short, it might be wrong.
+        name = tracker.get_slot("first_name")
+        print(f"Contenido del slot 'mi_slot': {name}")
 #        name = clean_name(slot_value)
 #        if len(name) < 3:
         if len(slot_value) < 3:
@@ -106,34 +110,66 @@ class ValidateReportForm(FormValidationAction):
             #    imagename = imagename.value
                 imageDirectory = "./images/{}".format(imagename)
         elif channel == 'rest':
-            image_json_str = tracker.get_slot("imagename")
-            # Convertir la cadena JSON en un objeto Python (diccionario en este caso)
-            image_data = json.loads(image_json_str)
-    
-            # Acceder al valor "base64" en el diccionario resultante y decodificarlo
-            decoded_image_data = base64.b64decode(image_data["base64"])
-    
-            # Define el nombre de archivo específico
-            image_filename = "image.jpg"  # Cambia el nombre según lo necesario
-    
-            # Directorio donde guardarás las imágenes
-            save_directory = "./images/"
-    
-            # Crea el directorio si no existe
-            os.makedirs(save_directory, exist_ok=True)
-    
-            # Guarda la imagen en el directorio
-            image_path = os.path.join(save_directory, image_filename)
-            with open(image_path, "wb") as f:
-                f.write(decoded_image_data)
+            imagen_url  = tracker.get_slot("imagename")
+            print(f"Contenido del slot 'mi_slot': ", imagen_url)
+            '''aws_access_key = 'AKIAS6HBXBRRHSOJCO6M'
+            aws_secret_key = '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'
+            bucket_name = 'imagenes-react'
+
+            
+            directorio_destino = "./images/"
+            nombre_archivo = "image.jpg"
+
+            s3_client = boto3.client('s3', aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key)
+            print(f"La conexion se establecio con exito")
+            if not os.path.exists(directorio_destino):
+                os.makedirs(directorio_destino)
+
+            
+            try:
+            # Descarga la imagen desde S3 al directorio y con el nombre personalizado
+                print(f"La ruta local se va a crear")
+                ruta_local = os.path.join(directorio_destino, nombre_archivo)
+                print(f"a continuacion se descargara la imagen")
+                s3_client.download_file(bucket_name, url, directorio_destino)
+                dispatcher.utter_message(text=f"¡Imagen descargada y guardada localmente en {directorio_destino}!")
+            except FileNotFoundError as fnf_error:
+                dispatcher.utter_message(text=f"Error: El archivo no se encontró - {fnf_error}")
+            except Exception as e:
+                dispatcher.utter_message(text=f"No se pudo descargar la imagen: {str(e)}")
+            
             #except Exception as e:
             #        dispatcher.utter_message(text="Error al guardar la imagen: {}".format(str(e)))
-                imageDirectory = "./images/image.jpg"
+            '''
+            directorio_destino = "./images"
+
+            # Nombre del archivo (puedes cambiarlo según tus preferencias)
+            nombre_archivo = "image.jpg"
+
+            # Ruta local completa donde se guardará la imagen
+            ruta_local = os.path.join(directorio_destino, nombre_archivo)
+
+            # Verifica si el directorio existe, y si no, créalo
+            if not os.path.exists(directorio_destino):
+                os.makedirs(directorio_destino)
+
+            try:
+                # Descarga la imagen desde la URL
+                response = requests.get(imagen_url)
+
+                # Verifica si la descarga fue exitosa (código de respuesta 200)
+                if response.status_code == 200:
+                # Guarda la imagen localmente
+                    with open(ruta_local, 'wb') as file:
+                        file.write(response.content)
+                    imageDirectory = "./images/image.jpg"
+            except Exception as e:
+                print(f"Error al descargar o guardar la imagen: {str(e)}")
 
         width_shape = 224
         height_shape = 224
         names = ['congrafiti','singrafiti']
-        modelt = load_model("model-IA/model-v1.h5")
+        modelt = load_model("model-IA/model-v2.h5")
 
 
         imaget=cv2.resize(cv2.imread(imageDirectory), (width_shape, height_shape), interpolation = cv2.INTER_AREA)
@@ -155,18 +191,17 @@ class ValidateReportForm(FormValidationAction):
             photo = f.read()
         photo_base64 = base64.b64encode(photo)
         photo_json = photo_base64.decode('ascii') 
-        data = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location_report": tracker.get_slot("location_report") , "imagename": photo_json}
-        response = requests.post(flask_url + "/add_contact", json=data)
-        if response.status_code == 200:
-            # Mostrar un mensaje de confirmación al usuario
-            dispatcher.utter_message(text="Datos enviados correctamente")
+        dataInfo = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location_report": tracker.get_slot("location_report") , "imagename": photo_json}
+        
+        if actions.uploads.uploadTelegram(dataInfo):
+            dispatcher.utter_message("Datos insertados correctamente en la base de datos")
         else:
-            # Mostrar un mensaje de error al usuario
-            dispatcher.utter_message(text="Ocurrió un problema al enviar los datos")
-
+            dispatcher.utter_message("Error al insertar datos en la base de datos")
+        
+         
         os.remove(imageDirectory)
 
-
+    
         return []
     
     '''
@@ -187,6 +222,16 @@ class ValidateReportForm(FormValidationAction):
             with open('./images/image.jpg', 'wb') as f:
                 f.write(image)    
             imageDirectory = "./images/image.jpg"
+
+        dataInfo = {"first_name": tracker.get_slot("first_name"), "last_name": tracker.get_slot("last_name"), "location_report": tracker.get_slot("location_report") , "imagename": photo_json}
+            response = requests.post(flask_url + "/add_contact", json=data)
+        if response.status_code == 200:
+            # Mostrar un mensaje de confirmación al usuario
+            dispatcher.utter_message(text="Datos enviados correctamente")
+        else:
+            # Mostrar un mensaje de error al usuario
+            dispatcher.utter_message(text="Ocurrió un problema al enviar los datos")
+
     '''
 '''        first_name = tracker.get_slot("first_name")
         last_name = tracker.get_slot("last_name")

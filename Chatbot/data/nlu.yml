@@ -151,6 +151,8 @@ nlu:
     - Natalia
     - Roberto
     - Paola
+    - Héctor
+    - Hector
 
 - intent: provide_lastname
   examples: |

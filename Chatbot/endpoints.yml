@@ -45,15 +45,20 @@ endpoints:
 
 #tracker_store:
 #  type: sql
-tracker_store:
-  type: SQL
-  dialect: "mysql" #"mysql+pymysql"  # the dialect used to interact with the db
-  url: "LeCuack"  # (optional) host of the sql db, e.g. "localhost"127.0.0.1
-  port: "3306"
-  db: "rasa"  # path to your db
-  username: "rasaserver"
+#tracker_store:
+#  type: SQL
+#  dialect: "mysql+pymysql"  # the dialect used to interact with the db
+#  url: "reportes-1.ce41nxatcuur.us-east-1.rds.amazonaws.com"
+#  port: "3306"
+#  db: "Reportes"
+#  username: "admin"
+#  password: "Proymodular123."
+#  url: "LeCuack"  # (optional) host of the sql db, e.g. "localhost"127.0.0.1
+#  port: "3306"
+#  db: "rasa"  # path to your db
+#  username: "rasaserver"
   #username: "rasaserver"  # username used for authentication
-  password: "Rasa#2023"  # password used for authentication
+#  password: "Rasa#2023"  # password used for authentication
 # Event broker which all conversation events should be streamed to.
 # https://rasa.com/docs/rasa/event-brokers
 
